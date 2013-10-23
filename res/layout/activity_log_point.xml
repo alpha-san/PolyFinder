@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".LogPoint" >
+    
+    <!-- Logo -->
+    <ImageView
+	    android:id="@+id/logo"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentTop="true"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginTop="10dp"
+	    android:src="@drawable/logo" />
+
+    <!-- Bronco name Input -->
+	<EditText
+	    android:id="@+id/userInput"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/pwdInput"
+	    android:layout_toLeftOf="@+id/textView1"
+	    android:layout_below="@id/logo"
+	    android:hint="@string/bronco"
+	    android:inputType="textPersonName" 
+	/>
+
+	<!-- Password Input -->
+	<EditText 
+	    android:id="@+id/pwdInput"
+	    android:hint="@string/pwd"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/userInput"
+	    android:inputType="textPassword"
+	/>
+
+	<!-- @csupomona.edu -->
+	<TextView
+	    android:id="@+id/textView1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBaseline="@id/userInput"
+	    android:layout_alignRight="@id/pwdInput"
+	    android:text="@string/domain"
+	    android:textSize="14sp"
+	    android:textStyle="bold" />
+
+	<!-- Sign in Button -->
+	<Button
+	    android:id="@+id/signIn"
+	    android:layout_width="120dp"
+	    android:layout_height="35dp"
+	    android:layout_below="@+id/pwdInput"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginTop="22dp"
+	    android:text="@string/logButton"
+	    android:textSize="14sp" />
+	
+	<!-- Error Message when Sign in fail -Red -->
+	<TextView 
+	    android:id="@+id/logError"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textSize="14sp"
+	    android:layout_below="@id/signIn"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginTop="10dp"
+	    android:textStyle="italic" 
+	    android:textColor="#ff0000"
+	    />
+	
+</RelativeLayout>
