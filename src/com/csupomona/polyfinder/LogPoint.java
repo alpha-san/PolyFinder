@@ -1,8 +1,11 @@
-package com.example.polyfinder;
+package com.csupomona.polyfinder;
+
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +17,7 @@ public class LogPoint extends Activity {
 	
 	Button logIn;
 	TextView logErr;
+	TextView register;
 	String user, pwd;
 	EditText bronco, passwd;
 
@@ -37,6 +41,7 @@ public class LogPoint extends Activity {
 		logErr = (TextView) findViewById(R.id.logError);
 		bronco = (EditText) findViewById(R.id.userInput);
 		passwd = (EditText) findViewById(R.id.pwdInput);
+		register = (TextView) findViewById(R.id.register);
 		
 		logIn.setOnClickListener(new View.OnClickListener() {
 			
@@ -44,7 +49,7 @@ public class LogPoint extends Activity {
 			public void onClick(View v) {
 				//Can delete this
 				if(bronco.getText().toString().equals("") || passwd.getText().toString().equals("")){
-					logErr.setText("Please enter Bronco Name and password");
+					logErr.setText("Please enter Username and Password");
 				}
 				else {
 					Context context = getApplicationContext();
@@ -54,5 +59,8 @@ public class LogPoint extends Activity {
 				}
 			}
 		});
+		
+		register.setText(Html.fromHtml("<a href=\"http://www.csupomona.edu/~anfarinas/cs356/polyfinder/\">Need to register?</a>"));
+		register.setMovementMethod(LinkMovementMethod.getInstance());
 	}
 }

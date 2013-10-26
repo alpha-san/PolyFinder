@@ -22,12 +22,11 @@
     <!-- Bronco name Input -->
 	<EditText
 	    android:id="@+id/userInput"
-	    android:layout_width="wrap_content"
+	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_alignLeft="@+id/pwdInput"
-	    android:layout_toLeftOf="@+id/textView1"
 	    android:layout_below="@id/logo"
-	    android:hint="@string/bronco"
+	    android:hint="@string/username"
 	    android:inputType="textPersonName" 
 	/>
 
@@ -40,17 +39,6 @@
 	    android:layout_below="@id/userInput"
 	    android:inputType="textPassword"
 	/>
-
-	<!-- @csupomona.edu -->
-	<TextView
-	    android:id="@+id/textView1"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBaseline="@id/userInput"
-	    android:layout_alignRight="@id/pwdInput"
-	    android:text="@string/domain"
-	    android:textSize="14sp"
-	    android:textStyle="bold" />
 
 	<!-- Sign in Button -->
 	<Button
@@ -76,4 +64,16 @@
 	    android:textColor="#ff0000"
 	    />
 	
+	<TextView 
+	    android:id="@+id/register"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textSize="14sp"
+	    android:layout_below="@+id/logError"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginTop="10dp"
+	    android:textColor="#0000ff"
+	    />
+	
 </RelativeLayout>
+

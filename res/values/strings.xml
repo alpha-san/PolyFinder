@@ -3,9 +3,8 @@
 
     <string name="app_name">PolyFinder</string>
     <string name="action_settings">Settings</string>
-    <string name="bronco">Bronco Name</string>
+    <string name="username">Username</string>
     <string name="pwd">Password</string>
-    <string name="domain">&quot;@csupomona.edu&quot;</string>
     <string name="logButton">Sign in</string>
 
 </resources>
