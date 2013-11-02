@@ -65,7 +65,7 @@ public class LogPoint extends Activity {
 		register.setText(Html.fromHtml("<a href=\"http://www.csupomona.edu/~anfarinas/cs356/polyfinder/\">Need to register?</a>"));
 		register.setMovementMethod(LinkMovementMethod.getInstance());
 	}
-	
+
 	private void newActivity(){
 		Thread th = new Thread(){
 			public void run(){

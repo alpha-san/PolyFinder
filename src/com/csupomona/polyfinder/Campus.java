@@ -19,5 +19,5 @@ public class Campus extends Activity{
 		WebSettings webSettings = wb.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 	}
-
+	
 }
