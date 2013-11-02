@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="leaflet.css" />
+    <link rel="stylesheet" href="custom.css" /> 
+</head>
+<body>
+    <div id="map"></div>
+    
+    <script src="leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([5, 5], 2);
+        L.tileLayer('cmap/{z}/{x}/{y}.png', {
+            minZoom: 2,
+            maxZoom: 5,
+            attribution: 'PolyFinder',
+			continuousWorld: true,
+			unloadInvisibleTiles: true,
+            tms: true
+        }).addTo(map);
+		map.panTo(new L.LatLng(-65.737, -73.923));
+
+	var marker = L.marker([-65, -73]).addTo(map);
+	marker.bindPopup("Damn I am late for class");
+	
+	//-1 - top, -179 - left, 31 - right, -89 - bottom
+	
+    </script>    
+
+</body>
+</html>

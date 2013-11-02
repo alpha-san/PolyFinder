@@ -4,6 +4,7 @@ package com.csupomona.polyfinder;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
@@ -56,11 +57,29 @@ public class LogPoint extends Activity {
 					Toast t = Toast.makeText(context, "successful", Toast.LENGTH_SHORT);
 					t.show();
 					logErr.setText("");
+					newActivity();
 				}
 			}
 		});
 		
 		register.setText(Html.fromHtml("<a href=\"http://www.csupomona.edu/~anfarinas/cs356/polyfinder/\">Need to register?</a>"));
 		register.setMovementMethod(LinkMovementMethod.getInstance());
+	}
+	
+	private void newActivity(){
+		Thread th = new Thread(){
+			public void run(){
+				Intent launch = new Intent("com.csupomona.polyfinder.CAMPUS");
+				startActivity(launch);
+			}
+		};
+		th.start();
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
 	}
 }
