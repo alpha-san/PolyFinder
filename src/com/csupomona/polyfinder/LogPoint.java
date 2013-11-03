@@ -1,6 +1,5 @@
 package com.csupomona.polyfinder;
 
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
