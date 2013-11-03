@@ -1,3 +1,6 @@
+var userCoord, tempMarker;
+var buttonStatus = false;
+
 var map = L.map('map').setView([5, 5], 4);
         L.tileLayer('cmap/{z}/{x}/{y}.png', {
             minZoom: 2,
@@ -39,6 +42,17 @@ var AddButton = L.Control.extend({
         var container = L.DomUtil.create('div', 'addButton');
 
         // ... initialize other DOM elements, add listeners, etc.
+        container.addEventListener('click', function(e) {
+        	// display buttons
+        	if (!buttonStatus) {
+        		buttonStatus = true;
+        		map.addControl(new GButton());
+        		map.addControl(new RButton());
+        	}
+        	
+        	// add event
+   
+        });
 
         return container;
     }
@@ -57,7 +71,12 @@ var GButton = L.Control.extend({
         var container = L.DomUtil.create('div', 'green');
 
         // ... initialize other DOM elements, add listeners, etc.
-
+        container.addEventListener('click', function(e) {
+        	console.log('test2');
+        	var tempMarker = L.marker(e.latlng).addTo(map);
+        	tempMarker.bindPopup("test");
+       });
+        
         return container;
     }
 });
@@ -74,6 +93,9 @@ var RButton = L.Control.extend({
         var container = L.DomUtil.create('div', 'red');
 
         // ... initialize other DOM elements, add listeners, etc.
+         container.addEventListener('click', function(e) {
+        	console.log('red');
+       });
 
         return container;
     }
@@ -90,5 +112,12 @@ function createEvent(txt, lat, id){
 //-1 - top, -179 - left, 31 - right, -89 - bottom  
 // b8: (-44.80912, -121.37695), b94: (-41.40978, -106.30371)
 function onMapClick(e) {
-    alert("You clicked the map at " + e.latlng);
+   if (buttonStatus) {
+   		console.log(e.latlng);
+   		if (tempMarker != null) {
+   			map.removeLayer(tempMarker);
+   		}
+   		tempMarker = L.marker(e.latlng).addTo(map);
+       	tempMarker.bindPopup("test");
+    }
 }
