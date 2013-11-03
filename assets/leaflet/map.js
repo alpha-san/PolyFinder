@@ -1,4 +1,4 @@
-var map = L.map('map').setView([5, 5], 2);
+var map = L.map('map').setView([5, 5], 4);
         L.tileLayer('cmap/{z}/{x}/{y}.png', {
             minZoom: 2,
             maxZoom: 5,
@@ -7,14 +7,15 @@ var map = L.map('map').setView([5, 5], 2);
 			unloadInvisibleTiles: true,
             tms: true
         }).addTo(map);
-	map.panTo(new L.LatLng(-65.737, -73.923));
+
 
 //setbounds
 var southWest = new L.LatLng(-85.02, -178.24),
     northEast = new L.LatLng(-.75, 31.64),
     bounds = new L.LatLngBounds(southWest, northEast);
 map.setMaxBounds(bounds);
-	
+map.panTo(new L.LatLng(-65.737, -73.923));
+
 // Firebase stuff
 var polyfinderData = new Firebase('https://polyfindertest.firebaseio.com/events');
 polyfinderData.on('value', function(snapshot) {
