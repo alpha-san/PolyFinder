@@ -34,9 +34,3 @@ function createEvent(txt, lat, id){
 function onMapClick(e) {
     alert("You clicked the map at " + e.latlng);
 }
-
-function addButtons() {
-	var btn=document.createElement("BUTTON");
-	var t=document.createTextNode("CLICK ME");
-	btn.appendChild(t);
-}
