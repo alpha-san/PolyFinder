@@ -9,7 +9,7 @@ html, body, #map {
 
 .addButton
 {
-    background-image: url(images/add_20.jpg);
+    background-image: url(https://dl.dropboxusercontent.com/u/8283278/CDN/Leaflet/images/command.png);
     width: 20px;
     height: 20px;
     background-position: 50% 50%;

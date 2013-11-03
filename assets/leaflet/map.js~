@@ -28,24 +28,6 @@ polyfinderData.on('value', function(snapshot) {
 
 map.on('click', onMapClick);  
 
-//Add Button
-var AddButton = L.Control.extend({
-    options: {
-        position: 'topright'
-    },
-
-    onAdd: function (map) {
-        // create the control container with a particular class name
-        var container = L.DomUtil.create('div', 'addButton');
-
-        // ... initialize other DOM elements, add listeners, etc.
-
-        return container;
-    }
-});
-
-map.addControl(new AddButton());
-
 //Green Button
 var GButton = L.Control.extend({
     options: {
