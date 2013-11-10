@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+    
+    <LinearLayout 
+        android:id="@+id/layout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical" >
+	    <TextView 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:textStyle="bold"
+	        android:gravity="center"
+	        android:text="Club Meeting" />
+        <ImageView 
+            android:id="@+id/meeting"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/meeting" />"
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:id="@+id/layout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical" >
+	    <TextView 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:textStyle="bold"
+	        android:gravity="center"
+	        android:text="Party" />
+    
+    	<ImageView
+    	    android:id="@+id/party"
+    	    android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/party" />
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/layout2"
+        android:layout_toRightOf="@id/layout1"
+        android:orientation="vertical" >
+	    <TextView 
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:textStyle="bold"
+	        android:gravity="center"
+	        android:text="Hangout" />
+        <ImageView 
+            android:id="@+id/hangout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/hangout" />"
+    </LinearLayout>
+
+</RelativeLayout>
