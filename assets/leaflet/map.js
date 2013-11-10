@@ -19,7 +19,7 @@ map.setMaxBounds(bounds);
 map.panTo(new L.LatLng(-65.737, -73.923));
 
 // Firebase stuff
-var polyfinderData = new Firebase('https://polyfindertest.firebaseio.com/events');
+var polyfinderData = new Firebase('https://polyfindertest.firebaseio.com');
 polyfinderData.on('value', function(snapshot) {
 	console.log(snapshot.val());
 	var events = snapshot.val();
