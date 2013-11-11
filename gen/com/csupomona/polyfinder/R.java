@@ -37,6 +37,7 @@ public final class R {
     public static final class layout {
         public static final int activity_campus=0x7f030000;
         public static final int activity_log_point=0x7f030001;
+        public static int activity_comment;
     }
     public static final class menu {
         public static final int log_point=0x7f070000;
