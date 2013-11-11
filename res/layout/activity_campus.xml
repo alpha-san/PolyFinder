@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <WebView
+        android:id="@+id/map"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+    />
+    
+    <ImageView
+	    android:id="@+id/addEvent"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:src="@drawable/add_50"
+	    android:paddingTop="10dp"
+	    android:paddingBottom="15dp"
+	    android:clickable="true"
+	    android:layout_alignParentEnd="true"
+	     />
+
+	<ImageView
+	    android:id="@+id/confirm"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/addEvent"
+	    android:layout_alignParentEnd="true"
+	    android:layout_below="@+id/addEvent"
+	    android:paddingBottom="15dp"
+	    android:visibility="invisible"
+	    android:clickable="true"
+	    android:src="@drawable/yes_40" />
+	
+	<ImageView
+	    android:id="@+id/cancel"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/confirm"
+	    android:layout_alignParentEnd="true"
+	    android:layout_below="@id/confirm"
+	    android:paddingBottom="15dp"
+	    android:visibility="invisible"
+	    android:clickable="true"
+	    android:src="@drawable/no_40" />
+
+</RelativeLayout>
