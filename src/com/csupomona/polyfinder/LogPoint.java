@@ -54,7 +54,7 @@ public class LogPoint extends Activity {
 				}
 				else {
 					Context context = getApplicationContext();
-					Toast t = Toast.makeText(context, "successful", Toast.LENGTH_SHORT);
+					Toast t = Toast.makeText(context, "Success!", Toast.LENGTH_SHORT);
 					t.show();
 					logErr.setText("");
 					newActivity();
