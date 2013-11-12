@@ -58,6 +58,7 @@ public class LogPoint extends Activity {
 					t.show();
 					logErr.setText("");
 					newActivity();
+					// log user into firebase
 				}
 			}
 		});

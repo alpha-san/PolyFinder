@@ -1,32 +1,60 @@
-var userCoord, tempMarker;
+var userCoord, tempMarker, nextId;
+// for testing
+var user_id = 0;
+var email = 'rltan@csupomona.edu', password = 'gay';
 
 var map = L.map('map').setView([5, 5], 4);
-        L.tileLayer('cmap/{z}/{x}/{y}.png', {
-            minZoom: 2,
-            maxZoom: 5,
-            attribution: 'PolyFinder',
-			continuousWorld: true,
-			unloadInvisibleTiles: true,
-            tms: true
-        }).addTo(map);
+L.tileLayer('cmap/{z}/{x}/{y}.png', {
+	minZoom: 2,
+	maxZoom: 5,
+	attribution: 'PolyFinder',
+	continuousWorld: true,
+	unloadInvisibleTiles: true,
+	tms: true
+}).addTo(map);
 
 
 //setbounds
 var southWest = new L.LatLng(-85.02, -178.24),
-    northEast = new L.LatLng(-.75, 31.64),
-    bounds = new L.LatLngBounds(southWest, northEast);
+northEast = new L.LatLng(-.75, 31.64),
+bounds = new L.LatLngBounds(southWest, northEast);
 map.setMaxBounds(bounds);
 map.panTo(new L.LatLng(-65.737, -73.923));
 
 // Firebase stuff
-var polyfinderData = new Firebase('https://polyfindertest.firebaseio.com/events');
-polyfinderData.on('value', function(snapshot) {
-	console.log(snapshot.val());
-	var events = snapshot.val();
-	for (var i = 0; i < events.length; i++) {
-		createEvent(events[i].message, new L.LatLng(events[i].coordinates.x, events[i].coordinates.y), events[i].id);
-	}
+var polyfinderData = new Firebase('https://polyfindertest.firebaseio.com/');
+polyfinderData.on('child_added', function(snapshot) {
+	var c_event = snapshot.val();
+	createEvent(c_event.message, new L.LatLng(c_event.coordinates.x, c_event.coordinates.y), c_event.id);
+	nextId = c_event.id;
 });
+
+var auth = new FirebaseSimpleLogin(polyfinderData, function(error, user) {
+	if (error) {
+		// an error occured while attempting to login
+		console.log(error);
+		alert('NOT LOGGED IN! :(');
+	} else if (user) {
+		// user is authenticated
+		console.log('User ID: ' + user.id + ', Provider: ' + user.provider);
+		console.log(user);
+		alert('Logged In!');
+		user_id = user.uid;
+	} else {
+        // user is logged out
+    }
+});
+
+// login user
+user_login(email, password);
+
+function user_login(email, pwd) {
+	// login
+	auth.login('password', {
+		email: email,
+		password: pwd,
+	});
+}
 
 function addButton(){
 	map.on('click', onMapClick); 
@@ -36,14 +64,18 @@ function yesButton(type, content){
 	map.off('click', onMapClick);
 	tempMarker.content = content;
 	tempMarker.type = type;
-	tempMarker.addEventListener('click', function(){WebViewInterface.eventDialog("User", content);});
+	tempMarker.addEventListener('click', function(){WebViewInterface.eventDialog('User', content);});
+	// add to firebase
+	addTestEvent('Cloud 9', content, tempMarker.getLatLng());
+
 	tempMarker = null;
+	alert(tempMarker);
 }
 
 function noButton(){
 	if (tempMarker != null) {
-   		map.removeLayer(tempMarker);
-   	}
+		map.removeLayer(tempMarker);
+	}
 	map.off('click', onMapClick);
 }
 
@@ -51,8 +83,25 @@ function noButton(){
 function createEvent(txt, lat, id){
 	var marker = L.marker(lat).addTo(map);
 	//marker.bindPopup(txt);
-        marker.eventID = id;
-        console.log(marker);
+	marker.eventID = id;
+	console.log(marker);
+}
+
+function addTestEvent(loc, mes, lat) {
+	var c_event = new Object();
+	c_event.date = JSON.stringify(new Date());
+	c_event.location = loc;
+	c_event.message = mes;
+	c_event.postedBy = 'rltan';
+	c_event.postedByUserId = user_id;
+	c_event.rating = 0;
+	c_event.comments = new Array();
+	c_event.id = ++nextId;
+	c_event.likedBy = new Array();
+	c_event.coordinates = new Object();
+	c_event.coordinates.x = lat.lat;
+	c_event.coordinates.y = lat.lng;
+	polyfinderData.push(c_event); 
 }
 
 // Get coordinates
@@ -60,14 +109,13 @@ function createEvent(txt, lat, id){
 // b8: (-44.80912, -121.37695), b94: (-41.40978, -106.30371)
 
 function onMapClick(e) {
-   	console.log(e.latlng);
-   	if (tempMarker != null) {
-   		map.removeLayer(tempMarker);
-   	}
-   	tempMarker = L.marker(e.latlng).addTo(map);
+	console.log(e.latlng);
+	if (tempMarker != null) {
+		map.removeLayer(tempMarker);
+	}
+	tempMarker = L.marker(e.latlng).addTo(map);
 	//tempMarker.bindPopup("Test");
 }
-
 
 function alertMe(){
 	alert("Hey Cloud 9");
