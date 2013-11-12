@@ -62,14 +62,14 @@ function addButton(){
 
 function yesButton(type, content){
 	map.off('click', onMapClick);
-	tempMarker.content = content;
-	tempMarker.type = type;
-	tempMarker.addEventListener('click', function(){WebViewInterface.eventDialog('User', content);});
+	//tempMarker.content = content;
+	//tempMarker.type = type;
+	//tempMarker.addEventListener('click', function(){WebViewInterface.eventDialog('User', content);});
 	// add to firebase
 	addTestEvent('Cloud 9', content, tempMarker.getLatLng());
 
 	tempMarker = null;
-	alert(tempMarker);
+	//alert(tempMarker);
 }
 
 function noButton(){
@@ -82,6 +82,7 @@ function noButton(){
 
 function createEvent(txt, lat, id){
 	var marker = L.marker(lat).addTo(map);
+	marker.addEventListener('click', function(){WebViewInterface.eventDialog('User', txt);});
 	//marker.bindPopup(txt);
 	marker.eventID = id;
 	console.log(marker);
