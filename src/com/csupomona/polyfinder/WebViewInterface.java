@@ -7,6 +7,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class WebViewInterface {
 	
@@ -17,6 +18,12 @@ public class WebViewInterface {
 		this.c = c;
 	}
 
+	@JavascriptInterface
+	public void showToast(String arg){
+		Toast t = Toast.makeText(c, arg, Toast.LENGTH_SHORT);
+		t.show();
+	}
+	
 	@JavascriptInterface
 	public void eventDialog(String title, String arg){
 		Dialog dialog = new Dialog(c);
