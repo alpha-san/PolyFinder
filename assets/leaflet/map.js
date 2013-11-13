@@ -1,9 +1,39 @@
-var userCoord, tempMarker, nextId; 
+/**
+ * userCoord and tempMarker are variables used to create a marker
+ * that the user puts onto the map.
+ */
+var userCoord, tempMarker; 
+
+/**
+ *  nextId is used to keep track of current nextId for the events.
+ * The id is retrieved from the last event in the firebase.
+ */
+var nextId;
+
+/**
+ * user_id is a variable that is used to keep track of the current user
+ * using PolyFinder. The user_id is retrieved from firebase using the 
+ * security javascript file and the auth variable.
+ */
 var user_id = 0;
+
+/** Markers is a variable used to keep track of all the markers.
+ * It is an array with all the markers. It is used to delete events
+ * and update events as they are in the firebase.
+ */
 var markers = new Array();
-// for testing
+
+/**
+ * email and password is used for logging the user into PolyFinder's Firebase.
+ * For testing purposes, the email and password are hardcoded below.
+ */
 var email = 'rltan@csupomona.edu', password = 'gay';
 
+
+/**
+ * map is a variable that holds the Cal Poly map.
+ * It is an object used from leaflet.
+ */
 var map = L.map('map').setView([5, 5], 4);
 L.tileLayer('cmap/{z}/{x}/{y}.png', {
 	minZoom: 2,
