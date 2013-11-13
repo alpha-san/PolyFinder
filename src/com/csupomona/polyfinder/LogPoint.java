@@ -53,9 +53,9 @@ public class LogPoint extends Activity {
 					logErr.setText("Please enter Username and Password");
 				}
 				else {
-					Context context = getApplicationContext();
-					Toast t = Toast.makeText(context, "Success!", Toast.LENGTH_SHORT);
-					t.show();
+					//Context context = getApplicationContext();
+					//Toast t = Toast.makeText(context, "Success!", Toast.LENGTH_SHORT);
+					//t.show();
 					logErr.setText("");
 					newActivity();
 					// log user into firebase

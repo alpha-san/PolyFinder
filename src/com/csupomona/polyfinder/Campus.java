@@ -30,24 +30,21 @@ public class Campus extends Activity {
 	String description;
 	int type;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_campus);
 		
-		Thread t = new Thread(){
-			public void run(){
-				webview = (WebView) findViewById(R.id.map);
-				webview.setWebChromeClient(new WebChromeClient());
-				WebSettings webSettings = webview.getSettings();
-				webSettings.setJavaScriptEnabled(true);
-				webview.addJavascriptInterface(new WebViewInterface(context), "WebViewInterface");
-				webview.loadUrl("file:///android_asset/leaflet/index.html");
-				setReference();
-			}
-		};
-		t.start();
+		webview = (WebView) findViewById(R.id.map);
+		webview.setWebChromeClient(new WebChromeClient());
+		WebSettings webSettings = webview.getSettings();
+		webSettings.setJavaScriptEnabled(true);
+		webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+		webview.addJavascriptInterface(new WebViewInterface(context), "WebViewInterface");
+		webview.loadUrl("file:///android_asset/leaflet/index.html");
+		setReference();
 	}
 	
 	//Set reference to XML and actionListener for buttons
