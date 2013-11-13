@@ -15,34 +15,35 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:src="@drawable/add_50"
-	    android:paddingTop="10dp"
 	    android:paddingBottom="15dp"
 	    android:clickable="true"
-	    android:layout_alignParentEnd="true"
+	    android:layout_alignRight="@id/map"
+	    android:layout_alignBottom="@id/map"
+	    android:layout_marginBottom="30dp"
 	     />
-
-	<ImageView
-	    android:id="@+id/confirm"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/addEvent"
-	    android:layout_alignParentEnd="true"
-	    android:layout_below="@+id/addEvent"
-	    android:paddingBottom="15dp"
-	    android:visibility="invisible"
-	    android:clickable="true"
-	    android:src="@drawable/yes_40" />
 	
 	<ImageView
 	    android:id="@+id/cancel"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/confirm"
-	    android:layout_alignParentEnd="true"
-	    android:layout_below="@id/confirm"
+	    android:layout_alignLeft="@id/addEvent"
+	    android:layout_alignRight="@id/map"
+	    android:layout_above="@id/addEvent"
 	    android:paddingBottom="15dp"
 	    android:visibility="invisible"
 	    android:clickable="true"
 	    android:src="@drawable/no_40" />
+	
+	<ImageView
+	    android:id="@+id/confirm"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@id/addEvent"
+	    android:layout_alignRight="@id/map"
+	    android:layout_above="@id/cancel"
+	    android:paddingBottom="15dp"
+	    android:visibility="invisible"
+	    android:clickable="true"
+	    android:src="@drawable/yes_40" />
 
 </RelativeLayout>

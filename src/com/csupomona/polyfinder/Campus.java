@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 public class Campus extends Activity {
@@ -65,8 +64,7 @@ public class Campus extends Activity {
 				
 				if(selection == false){
 					dialog = new Dialog(context);
-					dialog.setContentView(R.layout.post_it);
-					
+					dialog.setContentView(R.layout.post_it);		
 					dialog.setTitle("Create Event");
 					submit = (Button) dialog.findViewById(R.id.submit);
 					radio = (RadioGroup) dialog.findViewById(R.id.rbutton);
