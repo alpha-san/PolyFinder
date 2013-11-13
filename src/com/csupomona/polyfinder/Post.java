@@ -2,19 +2,19 @@ package com.csupomona.polyfinder;
     /**
      * Created by marti on 11/9/13.
      */
-    public class SingleComment {
-        String author_name, message, timestamp;
-        int event_id, comment_id;
+    public class Post {
+        private String author_name, message, timestamp, event_id;
+        private int comment_id;
 
-        public SingleComment(){
+        public Post(){
             author_name = "";
             message = "";
             timestamp = "";
-            event_id = -1;
+            event_id = "";
             comment_id = -1;
         }
 
-        public SingleComment(int e_id, int c_id, String a_name, String text, String time){
+        public Post(String e_id, int c_id, String a_name, String text, String time){
             author_name = a_name;
             message = text;
             timestamp = time;
@@ -30,7 +30,7 @@ package com.csupomona.polyfinder;
             this.comment_id = comment_id;
         }
 
-        public void setEvent_id(int event_id) {
+        public void setEvent_id(String event_id) {
             this.event_id = event_id;
         }
 
@@ -39,7 +39,7 @@ package com.csupomona.polyfinder;
         public String getAuthorName(){return author_name;}
         public String getMessage() {return message;}
         public String getTimestamp() {return timestamp;}
-        public int getEventId() {return event_id;}
+        public String getEventId() {return event_id;}
         public int getCommentId() {return comment_id;}
 
         public String toString(){
