@@ -72,13 +72,11 @@ polyfinderData.on('child_removed', function(snapshot) {
 polyfinderData.on('child_changed', function(snapshot) {
 	// updates to events will show on map
 	var u_event = snapshot.val();
-	alert('attempting to update event');
 	for (var i = 0; i < markers.length; i++) {
 		if (markers[i].eventID == u_event.id) {
 			map.removeLayer(markers[i]);
 			// optimize so that we don't have to create a new event each time
 			createEvent(u_event.message, new L.LatLng(u_event.coordinates.x, u_event.coordinates.y), u_event.id);
-			alert('event updated!');
 			break;
 			markers.splice(i, 1);
 		}
