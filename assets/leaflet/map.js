@@ -1,6 +1,7 @@
-var userCoord, tempMarker, nextId;
-// for testing
+var userCoord, tempMarker, nextId; 
 var user_id = 0;
+var markers = new Array();
+// for testing
 var email = 'rltan@csupomona.edu', password = 'gay';
 
 var map = L.map('map').setView([5, 5], 4);
@@ -27,6 +28,15 @@ polyfinderData.on('child_added', function(snapshot) {
 	var c_event = snapshot.val();
 	createEvent(c_event.message, new L.LatLng(c_event.coordinates.x, c_event.coordinates.y), c_event.id);
 	nextId = c_event.id;
+});
+polyfinderData.on('child_removed', function(snapshot) {
+	// remove events from the map
+	var id_to_remove = snapshot.val().id;
+	for (var i = 0; i < markers.length; i++) {
+		if (markers[i].eventID == id_to_remove) {
+			map.removeLayer(markers[i]);
+		}
+	}
 });
 
 var auth = new FirebaseSimpleLogin(polyfinderData, function(error, user) {
@@ -86,6 +96,7 @@ function createEvent(txt, lat, id){
 	//marker.bindPopup(txt);
 	marker.eventID = id;
 	console.log(marker);
+	markers.push(marker);
 }
 
 function addTestEvent(loc, mes, lat) {
