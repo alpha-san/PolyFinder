@@ -18,7 +18,22 @@ var southWest = new L.LatLng(-85.02, -178.24),
 map.setMaxBounds(bounds);
 map.panTo(new L.LatLng(-65.737, -73.923));
 
-// Firebase stuff
+// Firebase authorization
+var pfRef = new Firebase('https://polyfindertest.firebaseio.com/');
+var auth = new FirebaseSimpleLogin(pfRef, function(error, user) {
+	if (error) {
+		// an error occured while attempting to login
+		console.log(error);
+	} else if (user) {
+		// user is authenticated
+		console.log('User ID: ' + user.id + ', Provider: ' + user.provider);
+		console.log(user);
+	} else {
+		// user is logged out
+	}
+});
+
+// Firebase database
 var polyfinderData = new Firebase('https://polyfindertest.firebaseio.com');
 polyfinderData.on('value', function(snapshot) {
 	console.log(snapshot.val());
@@ -28,6 +43,33 @@ polyfinderData.on('value', function(snapshot) {
 	}
 });
 
+function user_login() {
+	// login
+	auth.login('password', {
+					email: 'rltan@csupomona.edu',
+					password: 'gay'
+	});
+}
+
+user_login();
+
+function addEventToFireBase(loc, mes) {
+    var d = new Date();
+}
+
+function addTestEvent(loc, mes) {
+	//polyfinder.child('date').set(JSON.stringify(new Date());
+	polyfinder.child('location').set(loc);
+	polyfinder.child('message').set(mes);
+	polyfinder.child('postedyBy').set('alpha-san');
+	polyfinder.child('postedByUserId').set(69);
+	polyfinder.child('rating').set(0);
+	polyfinder.child('comments').set(new Array());
+	polyfinder.child('id').set(4);
+	polyfinder.child('likedBy').set(new Array());
+}
+
+addTestEvent("8 24 CS Lab", "CSS Dance Party! wooooo");
 
 function addButton(){
 	map.on('click', onMapClick); 
