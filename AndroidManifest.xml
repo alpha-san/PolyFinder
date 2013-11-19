@@ -25,12 +25,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
+        <activity
             android:name=".Campus"
             android:label="Campus"
             android:screenOrientation="portrait" >
             <intent-filter >
                 <action android:name="com.csupomona.polyfinder.CAMPUS"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".DisplayComments"
+            android:label="Comments"
+            android:screenOrientation="portrait" >
+            <intent-filter >
+                <action android:name="com.csupomona.polyfinder.DISPLAYCOMMENTS"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>

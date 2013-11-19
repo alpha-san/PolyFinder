@@ -1,14 +1,19 @@
 package com.csupomona.polyfinder;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -42,7 +47,8 @@ public class Campus extends Activity {
 		WebSettings webSettings = webview.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 		webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
-		webview.addJavascriptInterface(new WebViewInterface(context), "WebViewInterface");
+        WebViewInterface wInterface = new WebViewInterface(context, this);
+		webview.addJavascriptInterface(wInterface, "WebViewInterface");
 		webview.loadUrl("file:///android_asset/leaflet/index.html");
 		setReference();
 	}
@@ -123,4 +129,43 @@ public class Campus extends Activity {
 			}
 		});
 	}
+
+    public void campDialog(String title, String arg){
+
+        AlertDialog.Builder build = new AlertDialog.Builder(context);
+        DialogInterface.OnClickListener listen = new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogInterface, int button){
+                if (button == DialogInterface.BUTTON_POSITIVE){
+                    dialog.dismiss();
+                    Thread th = new Thread(){
+                        public void run(){
+                            Intent i = new Intent("com.csupomona.polyfinder.DISPLAYCOMMENTS");
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.putExtra("key","event_id");
+                            context.startActivity(i);
+                        }
+                    };
+                    th.start();
+                }
+            }
+        };
+        build.setPositiveButton("Comments",listen);
+        build.setNegativeButton("Like", listen);
+        build.setMessage(arg);
+        build.setTitle(title);
+        build.setView(findViewById(R.layout.event_content));
+        dialog = build.create();
+
+		//Dialog Position
+		Window window = dialog.getWindow();
+		WindowManager.LayoutParams wlp = window.getAttributes();
+
+		wlp.gravity = Gravity.TOP;
+		wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+		window.setAttributes(wlp);
+
+		dialog.show();
+    }
+
 }

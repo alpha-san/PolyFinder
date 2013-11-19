@@ -42,7 +42,7 @@ public class LogPoint extends Activity {
 		logErr = (TextView) findViewById(R.id.logError);
 		bronco = (EditText) findViewById(R.id.userInput);
 		passwd = (EditText) findViewById(R.id.pwdInput);
-		register = (TextView) findViewById(R.id.register);
+        register = (TextView) findViewById(R.id.register);
 		
 		logIn.setOnClickListener(new View.OnClickListener() {
 			
@@ -70,7 +70,8 @@ public class LogPoint extends Activity {
 	private void newActivity(){
 		Thread th = new Thread(){
 			public void run(){
-				Intent launch = new Intent("com.csupomona.polyfinder.CAMPUS");
+				Intent launch = new Intent(getApplicationContext(),Campus.class);
+
 				startActivity(launch);
 			}
 		};
