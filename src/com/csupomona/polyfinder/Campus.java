@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -14,9 +15,13 @@ import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -34,6 +39,10 @@ public class Campus extends Activity {
 	RadioGroup radio;
 	String description;
 	int type;
+	private DrawerItem[] itemList;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    DrawerAdapter<DrawerItem> dAdapter;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -42,15 +51,46 @@ public class Campus extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_campus);
 		
+		setDrawer();
+		
 		webview = (WebView) findViewById(R.id.map);
 		webview.setWebChromeClient(new WebChromeClient());
 		WebSettings webSettings = webview.getSettings();
 		webSettings.setJavaScriptEnabled(true);
-		webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+		//webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         WebViewInterface wInterface = new WebViewInterface(context, this);
 		webview.addJavascriptInterface(wInterface, "WebViewInterface");
 		webview.loadUrl("file:///android_asset/leaflet/index.html");
 		setReference();
+	}
+	
+	void setDrawer(){
+		itemList = new DrawerItem[]{
+			new DrawerItem(R.drawable.all_60, "ALL"),	
+			new DrawerItem(R.drawable.meeting_60, "Event"),
+			new DrawerItem(R.drawable.hangout_60, "Hangout"),
+			new DrawerItem(R.drawable.party_60, "Party")
+		};
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        
+        dAdapter=new DrawerAdapter<DrawerItem>(this, R.layout.drawer_item, itemList);
+        
+        mDrawerList.setAdapter(dAdapter);
+        
+        mDrawerList.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView parent, View view, int position, long id) {
+				
+				Context context = getApplicationContext();
+				int duration = Toast.LENGTH_SHORT;
+
+				
+				mDrawerList.setItemChecked(position, true);
+				mDrawerLayout.closeDrawer(mDrawerList);
+			}        	
+        });
 	}
 	
 	//Set reference to XML and actionListener for buttons
