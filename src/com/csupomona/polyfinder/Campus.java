@@ -34,7 +34,7 @@ public class Campus extends Activity {
 	ImageView cancel;
 	Context context = this;
 	Dialog dialog;
-	String arg;
+	String email,password;
 	Button submit;
 	boolean selection = false;
 	RadioGroup radio;
@@ -51,8 +51,12 @@ public class Campus extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_campus);
-		
+
+        email = getIntent().getStringExtra("email");
+        password = getIntent().getStringExtra("password");
+
 		setDrawer();
 		
 		webview = (WebView) findViewById(R.id.map);
@@ -189,6 +193,8 @@ public class Campus extends Activity {
                             Intent i = new Intent("com.csupomona.polyfinder.DISPLAYCOMMENTS");
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             i.putExtra("key","event_id");
+                            i.putExtra("email", email);
+                            i.putExtra("password", password);
                             context.startActivity(i);
                         }
                     };
@@ -197,7 +203,7 @@ public class Campus extends Activity {
             }
         };
         build.setPositiveButton("Comments",listen);
-        build.setNegativeButton("Like", listen);
+        build.setNegativeButton("Cancel", listen);
         build.setMessage(arg);
         build.setTitle(title);
         build.setView(findViewById(R.layout.event_content));

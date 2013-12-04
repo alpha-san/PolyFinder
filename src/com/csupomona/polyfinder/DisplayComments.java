@@ -6,11 +6,17 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.ValueEventListener;
+import com.firebase.simplelogin.SimpleLogin;
+import com.firebase.simplelogin.SimpleLoginAuthenticatedHandler;
+import com.firebase.simplelogin.User;
+import com.firebase.simplelogin.enums.*;
+import com.firebase.simplelogin.enums.Error;
 
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -25,36 +31,63 @@ import android.widget.Toast;
 public class DisplayComments extends ListActivity {
     private Map<String, Post> comment_id_map; // hashmap for name(comment_id) to the JSON object
     private Firebase fBase;                     // Firebase reference
-    private String event_id;                    // event Id for the comment thread
+    private String event_id,email,password;                    // event Id for the comment thread
     private CustomAdapter<Post> adapter;        // adapter to be managing the data on the list view
     private ListView listView;
-
+    private ChildEventListener listener;
+    //private FirebaseReader;
 
     @Override
     protected void onCreate(Bundle savedIS) {
         super.onCreate(savedIS);
-
-
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.comment);
-        showToast("view: "+R.layout.comment);
+
         comment_id_map = new HashMap<String, Post>();
 
         //getting the event id from the extra bundle
 
         this.event_id = getIntent().getStringExtra("key");
-        this.event_id = "0";
+        email = getIntent().getStringExtra("email");
+        password = getIntent().getStringExtra("password");
+        //this.event_id = "-J89wmNBsFuqROJ0AJ5F";
+        //listView = (ListView) findViewById(R.id.list);
 
         //setting the firebase to refer to the correct url
         // all events in fire base should have a comments section
+        showToast("event_id: "+event_id);
+
         fBase = new Firebase("https://polyfindertest.firebaseio.com/"+event_id+"/comments/");
+        SimpleLogin sl = new SimpleLogin(fBase);
+        sl.loginWithEmail(email,password,new SimpleLoginAuthenticatedHandler() {
+            @Override
+            public void authenticated(Error error, User user) {
+                if (error != null){
+
+                }
+            }
+        });
+        sl.checkAuthStatus(new SimpleLoginAuthenticatedHandler() {
+            public void authenticated(com.firebase.simplelogin.enums.Error error, User user) {
+                if (error != null) {
+                    // Oh no! There was an error performing the check
+                    showToast("login error");
+                } else if (user == null) {
+                    // No user is logged in
+                    showToast("null user");
+                } else {
+                    // There is a logged in user
+                    showToast("User is Logged in");
+                }
+            }
+        });
         adapter=new CustomAdapter<Post>(this, R.layout.activity_comment);
 
-        //checkEmpty();
+        checkEmpty();
 
         //loads all data to adapter
         //sets listeners to check for changes in data
         loadComments(event_id);
-
 
         EditText inputText = (EditText)findViewById(R.id.messageInput);
         inputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -96,13 +129,13 @@ public class DisplayComments extends ListActivity {
             }
         });
 
-        final Firebase dataRef = new Firebase("https://polyfindertest.firebaseio.com/comments");
+        final Firebase dataRef = new Firebase("https://polyfindertest.firebaseio.com/"+event_id);
         dataRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                if (!snapshot.hasChild(event_id)){
+                if (!snapshot.hasChild("comments")){
                     //write to firebase new comments section of the name event_id
-                    dataRef.child(event_id);
+                    dataRef.child("comments");
                     //showToast(event_id+" comments");
                 }
                 dataRef.removeEventListener(this);
@@ -119,23 +152,20 @@ public class DisplayComments extends ListActivity {
         EditText inputText = (EditText)findViewById(R.id.messageInput);
         String input = inputText.getText().toString();
         if (!input.equals("")) {
-            // Create our 'model', a Post object
-            Post post = new Post("User",input,"Time");
             // Create a new, auto-generated child of that chat location, and save our chat data there
             HashMap<String,Object> data = new HashMap<String, Object>();
             data.put("date","today");
             data.put("id",2);
             data.put("message",input);
-            data.put("postedBy","user");
+            data.put("postedBy",email);
             fBase.push().setValue(data);
 
             inputText.setText("");
         }
     }
 
-
     private void loadComments(String event_id){
-        ChildEventListener listener = fBase.addChildEventListener(new ChildEventListener() {
+        listener = fBase.addChildEventListener(new ChildEventListener() {
 
             //adds all children one by one to the adapter
             //when new ones are added they are added in the same manner
@@ -148,6 +178,8 @@ public class DisplayComments extends ListActivity {
                 //map the name(commentID) to the post (JSON value/DataSnapshot)
                 comment_id_map.put(dataSnapshot.getName(),sc);
 
+                //adapter.add(sc);
+
 
                 //makes sure that the child is added in the correct position
                 if (s == null) adapter.insert(sc,0);
@@ -157,11 +189,11 @@ public class DisplayComments extends ListActivity {
 
                     int nextIndex = previousIndex+1;
 
-                    /*if (nextIndex == adapter.getCount()){
+                    if (nextIndex == adapter.getCount()){
                         showToast("child: "+adapter.getCount());
                         adapter.add(sc);
                     }
-                    else*/ adapter.insert(sc,nextIndex);
+                    else adapter.insert(sc,nextIndex);
                 }
             }
 
@@ -238,75 +270,16 @@ public class DisplayComments extends ListActivity {
         t.show();
     }
 
-    private void loadComment(String event_id){
-        ChildEventListener listener = new ChildEventListener(){
+    public void cleanup(){
+        fBase.removeEventListener(listener);
+        comment_id_map.clear();
+        adapter.clear();
+    }
 
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Post post = dataSnapshot.getValue(Post.class);
-                comment_id_map.put(dataSnapshot.getName(),post);
-                if (s == null) adapter.insert(post,0);
-                else{
-                    Post previous = comment_id_map.get(s);
-                    int previousIndex = adapter.getPosition(previous);
-                    int nextIndex = previousIndex+1;
-
-                    if (nextIndex == adapter.getCount()) adapter.add(post);
-                    else adapter.insert(post,nextIndex);
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Post post = dataSnapshot.getValue(Post.class);
-                String name = dataSnapshot.getName();
-                comment_id_map.put(name,post);
-                if (s == null){
-                    adapter.insert(post,0);
-                }
-                else{
-                    Post previous = comment_id_map.get(s);
-                    int previousIndex = adapter.getPosition(previous);
-                    int nextIndex = previousIndex+1;
-
-                    if (nextIndex == adapter.getCount()) adapter.add(post);
-                    else adapter.insert(post,nextIndex);
-                }
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                String name = dataSnapshot.getName();
-                adapter.remove(comment_id_map.get(name));
-                comment_id_map.remove(name);
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                String comment_id = dataSnapshot.getName();
-                Post old_post = comment_id_map.get(comment_id);
-                Post new_post = dataSnapshot.getValue(Post.class);
-
-                adapter.remove(old_post);
-
-                if (s==null) adapter.insert(new_post,0);
-
-                else {
-                    Post previousObj = comment_id_map.get(s);
-                    int previousIndex = adapter.getPosition(previousObj);
-                    int nextIndex = previousIndex+1;
-                    if (nextIndex == adapter.getCount()) adapter.add(new_post);
-                    else adapter.insert(new_post,nextIndex);
-                }
-            }
-
-            @Override
-            public void onCancelled() {
-                //listener was cancelled
-            }
-        };
-
-        fBase.addChildEventListener(listener);
+    @Override
+    public void onPause() {
+        super.onPause();
+        cleanup();
+        finish();
     }
 }

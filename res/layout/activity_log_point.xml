@@ -46,10 +46,25 @@
 	    android:layout_width="120dp"
 	    android:layout_height="35dp"
 	    android:layout_below="@+id/pwdInput"
-	    android:layout_centerHorizontal="true"
 	    android:layout_marginTop="22dp"
 	    android:text="@string/logButton"
-	    android:textSize="14sp" />
+	    android:layout_marginLeft="40dp"
+	    android:textSize="14sp"
+	    android:padding="5dp"
+	     />
+	
+	<Button 
+        android:id="@+id/createUser"
+	    android:layout_width="120dp"
+	    android:layout_height="35dp"
+	    android:layout_below="@id/pwdInput"
+	    android:layout_toRightOf="@id/signIn"
+	    android:layout_marginTop="22dp"
+	    android:text="Register"
+	    android:layout_marginRight="50dp"
+	    android:textSize="14sp"
+	    android:padding="10dp"
+        />
 	
 	<!-- Facebook Login Button -->
 	<com.facebook.widget.LoginButton
@@ -72,17 +87,6 @@
 	    android:layout_marginTop="10dp"
 	    android:textStyle="italic" 
 	    android:textColor="#ff0000"
-	    />
-	
-	<TextView 
-	    android:id="@+id/register"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:textSize="14sp"
-	    android:layout_below="@+id/logError"
-	    android:layout_centerHorizontal="true"
-	    android:layout_marginTop="10dp"
-	    android:textColor="#0000ff"
 	    />
 	
 </RelativeLayout>

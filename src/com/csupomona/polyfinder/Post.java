@@ -9,7 +9,6 @@ public class Post {
         author_name = "";
         message = "";
         timestamp = "";
-
     }
 
     public Post(String a_name, String text, String time){
@@ -31,7 +30,4 @@ public class Post {
     public String toString(){
         return author_name +": "+message;
     }
-
-
-
 }
