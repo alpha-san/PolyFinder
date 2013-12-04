@@ -16,14 +16,16 @@ import android.view.ViewGroup;
 
 public class FacebookLogin extends Fragment {
 	
-	private static final String TAG = "MainFragment";
+	private static final String TAG = "FacebookLogin";
 	private UiLifecycleHelper uiHelper;
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, 
 	        ViewGroup container, 
 	        Bundle savedInstanceState) {
 	    View view = inflater.inflate(R.layout.activity_log_point, container, false);
+	    
 
 	    //Does this go here or in LogPoint?
 	    
@@ -36,6 +38,8 @@ public class FacebookLogin extends Fragment {
 	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
 	    if (state.isOpened()) {
 	        Log.i(TAG, "Logged in...");
+	       	        
+	        //display map
 	    } else if (state.isClosed()) {
 	        Log.i(TAG, "Logged out...");
 	    }
@@ -52,23 +56,10 @@ public class FacebookLogin extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    uiHelper = new UiLifecycleHelper(getActivity(), callback);
-	    uiHelper.onCreate(savedInstanceState);
+	    uiHelper.onCreate(savedInstanceState);   
+	    
 	}
 	
-	@Override
-	public void onResume() {
-	    super.onResume();
-	  	 // For scenarios where the main activity is launched and user
-	    // session is not null, the session state change notification
-	    // may not be triggered. Trigger it if it's open/closed.
-	    Session session = Session.getActiveSession();
-	    if (session != null &&
-	           (session.isOpened() || session.isClosed()) ) {
-	        onSessionStateChange(session, session.getState(), null);
-	    }
-
-	    uiHelper.onResume();
-	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
