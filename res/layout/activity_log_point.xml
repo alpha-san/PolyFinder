@@ -51,6 +51,16 @@
 	    android:text="@string/logButton"
 	    android:textSize="14sp" />
 	
+	<!-- Facebook Login Button -->
+	<com.facebook.widget.LoginButton
+        android:id="@+id/authButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/signIn"
+        />
+	
 	<!-- Error Message when Sign in fail -Red -->
 	<TextView 
 	    android:id="@+id/logError"

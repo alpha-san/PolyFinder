@@ -1,10 +1,8 @@
 package com.csupomona.polyfinder;
 
-
-import android.os.Bundle;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
@@ -12,15 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class LogPoint extends Activity {
+public class LogPoint extends FragmentActivity {
 	
 	Button logIn;
 	TextView logErr;
 	TextView register;
 	String user, pwd;
 	EditText bronco, passwd;
+	private FacebookLogin fbLogin;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +26,26 @@ public class LogPoint extends Activity {
 		setContentView(R.layout.activity_log_point);
 		
 		referenceXML();
+		
+		//Facebook Login
+		
+		  if (savedInstanceState == null) {
+		        // Add the fragment on initial activity setup
+		        fbLogin = new FacebookLogin();
+		        getSupportFragmentManager()
+		        .beginTransaction()
+		        .add(android.R.id.content, fbLogin)
+		        .commit();
+		    } else {
+		        // Or set the fragment from restored state info
+		        fbLogin = (FacebookLogin) getSupportFragmentManager()
+		        .findFragmentById(android.R.id.content);
+		    }
 	}
+	
+	
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

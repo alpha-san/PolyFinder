@@ -1,5 +1,8 @@
 package com.csupomona.polyfinder;
 
+
+import com.facebook.UiLifecycleHelper;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -43,6 +46,7 @@ public class Campus extends Activity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     DrawerAdapter<DrawerItem> dAdapter;
+    private UiLifecycleHelper uiHelper; //instance to handle the result of opening the FB Share Dialog
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -62,7 +66,20 @@ public class Campus extends Activity {
 		webview.addJavascriptInterface(wInterface, "WebViewInterface");
 		webview.loadUrl("file:///android_asset/leaflet/index.html");
 		setReference();
+		
+		//UiLifecycleHelper configuration for FB Share Dialog:
+		
+		
+		    super.onCreate(savedInstanceState);
+
+		    //uiHelper = new UiLifecycleHelper(this, callback);
+		    uiHelper.onCreate(savedInstanceState);
+		
+		
+		
 	}
+	
+	
 	
 	void setDrawer(){
 		itemList = new DrawerItem[]{
